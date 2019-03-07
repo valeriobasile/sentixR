@@ -1,23 +1,21 @@
 #' Sentix
 #'
 #' A package to compute the sentiment polarity of Italian text using the Sentix lexicon.
-#' @param txt The text to analyze.
 #' @keywords sentiment
 #' @export sentiment
-#' @examples
-#' sentiment()
+
+sentix_file <- system.file("extdata", "sentix_lemma2.0.tsv", package = "sentix")
+udmodel_file <- system.file("extdata", "italian-isdt-ud-2.3-181115.udpipe", package = "sentix")
 
 # load the sentix lexicon
-sentix <- read.delim("sentix_lemma2.0.tsv", header=F, quote="", colClasses=c("character", "numeric"))
+sentix <- read.delim(sentix_file, header=F, quote="", colClasses=c("character", "numeric"))
 names(sentix) <- c("lemma", "value")
 
-# load the UDpipe model for italian
-udmodel_italian <- udpipe_load_model(file = "italian-isdt-ud-2.3-181115.udpipe")
 
 # function to tokenize and lemmatize the input text using UDpipe
 get_lemmas <- function(txt){
   # load the UDpipe model for italian
-  udmodel_italian <- udpipe_load_model(file = "italian-isdt-ud-2.3-181115.udpipe")
+  udmodel_italian <- udpipe_load_model(file = udmodel_file)
   annotation <- as.data.frame(udpipe_annotate(udmodel_italian, x = txt))
   return (annotation$lemma)
 }
