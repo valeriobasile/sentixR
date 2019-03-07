@@ -3,7 +3,7 @@ R package to perform sentiment analysis on Italian using sentix
 
 # Install
 
-R CMD INSTALL sentix_0.1.tar.gz
+R CMD INSTALL sentix_0.0.0.9000.tar.gz
 
 # Use
 
