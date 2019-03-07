@@ -9,5 +9,6 @@ R CMD INSTALL sentix_0.1.tar.gz
 
     > library(sentix)
     Loading required package: udpipe
+    > model <- load.udpipe()
     > sentiment("oggi è una bella giornata")
-    [1] 0.575
+    [1] 0.3121985
