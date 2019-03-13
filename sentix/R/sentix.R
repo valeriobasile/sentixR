@@ -17,7 +17,7 @@ get_lemmas <- function(txt, model){
   return (annotation$lemma)
 }
 
-#function to tokenize and lemmatizethe input dataframe using udpipe
+#function to tokenize and lemmatizethe input dataframe using udpipe (txt = df$txt)
 get_df_lemmas <- function(txt, model){
   annotation <- as.data.frame(udpipe_annotate(model, x = txt, doc_id = paste("doc", seq_along(txt))))
   new.df <- subset(annotation, select= c("doc_id", "lemma"))
