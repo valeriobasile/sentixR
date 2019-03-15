@@ -17,6 +17,13 @@ get_lemmas <- function(txt, model){
   return (annotation$lemma)
 }
 
+#function to tokenize and lemmatizethe input dataframe using udpipe (txt = df$txt)
+get_df_lemmas <- function(txt, model){
+  annotation <- as.data.frame(udpipe_annotate(model, x = txt, doc_id = paste("doc", seq_along(txt))))
+  new.df <- subset(annotation, select= c("doc_id", "lemma"))
+  return (new.df)
+}
+
 # function to compute the total sentiment of a text using Sentix
 sentix.sentiment <- function(txt, model) {
   lemmas <- get_lemmas(txt, model)
@@ -26,6 +33,24 @@ sentix.sentiment <- function(txt, model) {
   }
   return (mean(values))
 }
+
+# function to compute the total sentiment for each document in a dataframe using sentix
+#This function requires dplyr!
+library(dplyr)
+sentix.df.sentiment <- function(txt, model) {
+  lemmas <- get_df_lemmas(txt, model)
+  sent <- inner_join(lemmas, sentix, by = "lemma")
+  sentiment <- sent %>%
+    group_by(doc_id) %>%
+    mutate(sentimentXdoc = mean(value))
+
+  if (length(sent2$value) < 1) {
+    return (0.0)
+  }
+  return (sentiment)
+}
+
+
 
 # function to initialize the model
 load.udpipe <- function(model.file = udmodel_file) {
