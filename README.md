@@ -17,8 +17,8 @@ R CMD INSTALL sentix_0.0.0.9000.tar.gz
 ## To analyse a dataframe of documents
 
     > df <- data.frame(id = c(1,2,3), text = c("Oggi è una bella giornata",
-                                           "Non mi sento molto bene",
-                                           "Il sole splende, ma c'è un brutto vento"))
+                                               "Non mi sento molto bene",
+                                               "Il sole splende, ma c'è un brutto vento"))
     > model <- load.udpipe()
     > sentix.df.sentiment(df$text, model)
        A tibble: 9 x 4
