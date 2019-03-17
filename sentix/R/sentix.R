@@ -44,7 +44,7 @@ sentix.df.sentiment <- function(txt, model) {
     group_by(doc_id) %>%
     mutate(sentimentXdoc = mean(value))
 
-  if (length(sent2$value) < 1) {
+  if (length(sent$value) < 1) {
     return (0.0)
   }
   return (sentiment)
