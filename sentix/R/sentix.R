@@ -2,7 +2,7 @@
 #'
 #' A package to compute the sentiment polarity of Italian text using the Sentix lexicon.
 #' @keywords sentiment
-#' @export load.udpipe sentix.sentiment
+#' @export load.udpipe sentix.sentiment sentix.df.sentiment
 
 sentix.file <- system.file("extdata", "sentix_lemma2.0.tsv", package = "sentix")
 udmodel.file <- system.file("extdata", "italian-isdt-ud-2.3-181115.udpipe", package = "sentix")
