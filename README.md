@@ -40,7 +40,7 @@ allowing them to be easily used also within other frameworks such as
 ## Install
 
 ``` r
-remotes::install_github(valeriobasile/sentixr)
+remotes::install_github(valeriobasile/sentixr, build_vignettes = TRUE)
 ```
 
 ## Lexicons

@@ -33,7 +33,7 @@ It also provides utility functions to manage the included lexicons, allowing the
 ## Install
 
 ``` r
-remotes::install_github(valeriobasile/sentixr)
+remotes::install_github(valeriobasile/sentixr, build_vignettes = TRUE)
 ```
 
 ## Lexicons
