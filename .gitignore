@@ -1,0 +1,15 @@
+.Rproj.user
+.Rhistory
+.RData
+.Ruserdata
+references.bib
+references2.bib
+/.quarto/
+/.vscode/
+**/*.quarto_ipynb
+README_old.md
+*.udpipe
+sentixr.Rproj
+.positai
+vignettes/*.html
+vignettes/*.pdf

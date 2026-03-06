@@ -1,0 +1,44 @@
+Package: sentixr
+Title: Lexicons and Tools for Italian Sentiment Analysis
+Version: 0.1.0
+Description: Lexicons and tools to perform sentiment analysis on Italian texts. Lexicons included: Sentix 3.0, MAL, ElIta VAD and basic emotions (Plutchik's wheel of emotions).
+Depends: 
+    R (>= 3.5),
+    dplyr,
+    tidyselect,
+    rlang
+Imports: udpipe
+Suggests: 
+    knitr,
+    rmarkdown,
+    tidytext,
+    spacyr,
+    readtext,
+    tibble,
+    testthat (>= 3.0.0),
+    remotes,
+    quanteda,
+    quanteda.sentiment,
+    mockery
+Remotes: quanteda/quanteda.sentiment
+VignetteBuilder: knitr
+License: GPL (>= 3)
+Encoding: UTF-8
+LazyData: true
+RoxygenNote: 7.3.3
+Roxygen: list(markdown = TRUE)
+NeedsCompilation: no
+URL: https://github.com/valeriobasile/sentixr
+Authors@R: c(
+    person("Agnese", "Vardanega", email = "avardanega@unite.it", role = c("aut", "cre"),
+           comment = c(ORCID = "0000-0002-1419-9896")),
+    person("Valerio", "Basile", email = "valerio.basile@unito.it", role = c("aut"),
+           comment = c(ORCID = "0000-0001-8110-6832")),
+    person("Eliana", "Di Palma", email = "eliana.dipalma@unito.it", role = "aut",
+           comment = c(ORCID = "0000-0003-2154-2696")),
+    person("Giuliano", "Gabrieli", email = "giuliano.gabrieli@crea.gov.it", role = "aut",
+           comment = c(ORCID = "0009-0005-1153-5662")),
+    person("Marco", "Vassallo", email = "marco.vassallo@crea.gov.it", role = "aut",
+           comment = c(ORCID = "0000-0001-7016-6549"))
+  )
+Config/testthat/edition: 3
