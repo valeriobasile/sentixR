@@ -3,7 +3,6 @@
 
 <!-- badges: start -->
 
-[![R-CMD-check](https://github.com/valeriobasile/sentixr/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/valeriobasile/sentixr/actions/workflows/R-CMD-check.yaml)
 [![License:
 GPL-3](https://img.shields.io/badge/License-GPL--3.0-yellow.svg)](https://opensource.org/license/gpl-3-0)
 [![Lifecycle:
@@ -12,7 +11,7 @@ experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](h
 <!-- badges: end -->
 
 R package to perform sentiment analysis on Italian texts, including five
-lexicons in tidy format (tibbles): Sentix 3.0, MAL, ELIta VAD and basic
+lexicons in tidy format (tibbles): Sentix, MAL, ELIta VAD and basic
 emotions (Plutchik’s wheel of emotions).
 
 ## Overview
@@ -40,7 +39,8 @@ allowing them to be easily used also within other frameworks such as
 ## Install
 
 ``` r
-remotes::install_github(valeriobasile/sentixr, build_vignettes = TRUE)
+remotes::install_github("valeriobasile/sentixr", dependencies = TRUE, 
+                         build_vignettes = TRUE)
 ```
 
 ## Lexicons
@@ -243,9 +243,11 @@ sentix_summarize(anno_vad)
 
 ## How to Cite
 
-If you use sentixr in your research, please cite it as follows:
+If you use *sentixr* in your research, please cite it as follows:
 
-…
+Vardanega, A., Basile, V., Vassallo, M., Gabrieli, G. & Di Palma, E.
+(2026). sentixr (Versione 0.1.0)
+https://github.com/valeriobasile/sentixR
 
 ## Authors
 
@@ -253,11 +255,11 @@ If you use sentixr in your research, please cite it as follows:
 
 - Basile, Valerio (Università di Torino)
 
-- Di Palma, Eliana (Università di Torino)
+- Vassallo, Marco (CREA-PB)
 
 - Gabrieli, Giuliano (CREA-PB)
 
-- Vassallo, Marco (CREA-PB)
+- Di Palma, Eliana (Università di Torino)
 
 ## References
 
