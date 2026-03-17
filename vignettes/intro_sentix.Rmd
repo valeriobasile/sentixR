@@ -45,7 +45,7 @@ sentix_summarize(frase_ann)
 
 ## `sentix_summarize()`
 
-`sentix_summarize()` computes overall sentiment scores and auxiliary metrics per document (or other segments, via the argument `by`) from the annotated dataframe.
+`sentix_summarize()` computes overall sentiment scores and auxiliary metrics per document (or other segments, via the argument `by`) from the annotated dataframe. The default behavior is to summarize by document.
 
 By default, `sentix_summarize()` returns
 
@@ -75,7 +75,7 @@ The `sentix_annotate()` function performs tokenization and lemmatization (via `u
 
 The output is a dataframe where each row is a token. It is a simplified version of the full `udpipe` output, plus the sentiment score(s).
 
-For large corpora, the user may optionally specify the number of cores to use, via the argument `parallel.cores`, which is inherited from *udpipe* and passed to `udpipe::udipe()`.
+For large corpora, the user may optionally specify the number of cores to use, via the argument `parallel.cores`, which is inherited from *udpipe* and passed to `udpipe::udpipe()`.
 
 ### Managing udpipe model
 
@@ -96,7 +96,6 @@ model <- udpipe::udpipe_load_model("italian-isdt-ud-2.5-191206.udpipe")
 
 The function, like *udpipe*, accepts as input single texts, multiple texts (a character vector, a list or a list of tokens), or data frames with `text` and `doc_id` columns.
 
-For large corpora, the user may optionally specify the number of cores to use, via the argument `parallel.cores`, which is inherited from *udpipe* and passed to `udpipe::udipe()`.
 
 The function processes single texts and multiple texts, assigning a document ID to each one, and helps the user specify document identifiers, which are processed and safely passed to `udpipe::udpipe()`.
 
@@ -206,8 +205,10 @@ head(anno_poly)
 
 The index will be summarized as `ambiguity` score, calculated as `n_poly` / `n_scored`, where:
 
--   `n_poly`: Number of tokens with ambiguous tokens, based on the `ambiguity` level setting (default = 3);
+-   `n_poly`: Number of tokens with ambiguous tokens, based on the `ambiguity` level setting (default = 3, which indicates the highest ambiguity level `"3"`);
 -   `n_scored`: Number of tokens found in the lexicon.
+
+A higher `ambiguity` score in the summarized output indicates that a document relies heavily on words historically associated with mixed or contrasting sentiments, suggesting a more complex overall polarity.
 
 
 ```{r}
@@ -216,6 +217,7 @@ sentix_summarize(anno_poly,
                  ambiguity = 3)
 ```
 
+A higher `ambiguity` score in the summarized output indicates that a document relies heavily on words historically associated with mixed or contrasting sentiments, suggesting a more nuanced or complex overall polarity.
 
 ## References
 

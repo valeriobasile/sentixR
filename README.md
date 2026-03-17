@@ -140,7 +140,7 @@ sentix_annotate("Oggi è una bella giornata. Esco a fare una passeggiata") |>
 selected lexicon, after parsing them with *udpipe*. For large corpora,
 the user may optionally specify the number of cores to use, via the
 argument `parallel.cores`, which is inherited from *udpipe* and passed
-to `udpipe::udipe()`.
+to `udpipe::udpipe()`.
 
 #### Managing the udpipe model
 

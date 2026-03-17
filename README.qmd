@@ -83,7 +83,7 @@ sentix_annotate("Oggi è una bella giornata. Esco a fare una passeggiata") |>
 
 ### Annotate
 
-`sentix_annotate()` annotates texts with sentiment scores from the selected lexicon, after parsing them with *udpipe*. For large corpora, the user may optionally specify the number of cores to use, via the argument `parallel.cores`, which is inherited from *udpipe* and passed to `udpipe::udipe()`.
+`sentix_annotate()` annotates texts with sentiment scores from the selected lexicon, after parsing them with *udpipe*. For large corpora, the user may optionally specify the number of cores to use, via the argument `parallel.cores`, which is inherited from *udpipe* and passed to `udpipe::udpipe()`.
 
 #### Managing the udpipe model
 
@@ -111,9 +111,10 @@ data(recensioni_tv)
 
 # Annotate the dataframe directly}
 anno_df <- sentix_annotate(
-  recensioni_tv, 
-  # loaded model 
-  model = model)
+  recensioni_tv,
+  # loaded model
+  model = model
+)
 
 head(anno_df)
 ```
@@ -124,9 +125,7 @@ By default, `sentix_annotate()` uses the Sentix lexicon. To use a different lexi
 
 ```{r}
 # Use ELIta lexicon with VAD scores
-anno_vad <- sentix_annotate(recensioni_tv,
-                            model = model, 
-                            dict = "elita_VAD")
+anno_vad <- sentix_annotate(recensioni_tv, model = model, dict = "elita_VAD")
 ```
 
 ### Summarize
@@ -134,9 +133,11 @@ anno_vad <- sentix_annotate(recensioni_tv,
 `sentix_summarize()` computes overall sentiment scores and auxiliary metrics per document (or other segments, via the argument `by`) from the annotated dataframe.
 
 ```{r}
-sentix_summarize(anno_df,
-                 # summarize by sentence
-                 by = c("doc_id", "sentence_id"))
+sentix_summarize(
+  anno_df,
+  # summarize by sentence
+  by = c("doc_id", "sentence_id")
+)
 ```
 
 When using lexicons with multiple features (e.g., ELIta), all features are summarized.
