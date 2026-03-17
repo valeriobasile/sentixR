@@ -45,6 +45,8 @@ sentix_summarize(frase_ann)
 
 ## `sentix_summarize()`
 
+`sentix_summarize()` computes overall sentiment scores and auxiliary metrics per document (or other segments, via the argument `by`) from the annotated dataframe.
+
 By default, `sentix_summarize()` returns
 
 -   `sentiment`: The average sentiment score for the document.
@@ -54,7 +56,8 @@ By default, `sentix_summarize()` returns
 To obtain only sentiment scores, set `simplify = TRUE`:
 
 ```{r}
-sentix_summarize(frase_ann, simplify = TRUE)
+sentix_summarize(frase_ann, 
+                 simplify = TRUE)
 ```
 
 
@@ -71,6 +74,8 @@ Note that *udpipe* assigns sentence IDs starting from 1 for each document, so se
 The `sentix_annotate()` function performs tokenization and lemmatization (via `udpipe`), and then joins the result with one of the available sentiment lexicons. By default, it uses Sentix.
 
 The output is a dataframe where each row is a token. It is a simplified version of the full `udpipe` output, plus the sentiment score(s).
+
+For large corpora, the user may optionally specify the number of cores to use, via the argument `parallel.cores`, which is inherited from *udpipe* and passed to `udpipe::udipe()`.
 
 ### Managing udpipe model
 
