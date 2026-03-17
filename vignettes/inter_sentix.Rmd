@@ -15,7 +15,7 @@ knitr::opts_chunk$set(
 )
 ```
 
-`sentixr` is designed to play well with others. If you prefer the `tidytext` ecosystem or the `quanteda` framework, you can easily export the lexicons and use them in your existing pipelines.
+`sentixr` is designed to be used with other R packages for text analysis. If you prefer the `tidytext` ecosystem or the `quanteda` framework, you can export the lexicons and use them in your existing pipelines.
 
 ## Setup
 
@@ -32,18 +32,20 @@ recensioni_tv
 
 ## sentixr with tidytext
 
-If you prefer the `tidytext` ecosystem for text analysis, `sentixr` provides easy access to its lexicons in a tidy format, ready for joining.
+For the `tidytext` ecosystem, `sentixr` provides access to its lexicons in a tidy format, ready for joining.
 
 ```{r}
 library(tidytext)
 ```
 
-For `tidytext` workflows on raw text (without lemmatization), the **MAL** lexicon is preferred because it contains inflected forms, matching the output of standard tokenizers.
+
 
 
 ### Get the Lexicon
 
 Use `get_sentix()` to retrieve the lexicon as a tidy tibble, with two only columns.
+
+For `tidytext` workflows on raw text (without lemmatization), the **MAL** lexicon is preferred because it contains inflected forms, matching the output of standard tokenizers.
 
 ```{r}
 # Get the MAL lexicon (inflected forms)
@@ -54,8 +56,6 @@ head(mal_dict)
 ### Tokenize and Join
 
 Use `tidytext::unnest_tokens()` to split the text into words.
-
-
 
 ```{r}
 # Tokenize
@@ -72,14 +72,14 @@ head(tidy_sent)
 ```
 
 
-We use left_join to keep all words (even those without a score) so that the token count (n_tokens) remains accurate.
+Here, `left_join` is used to keep all words (even those without a score) so that the token count (`n_tokens`) remains accurate: `score` will be `NA` for words not found in the lexicon.
 
 Perform an inner join to match only words within the lexicon.
 
 
 ### Analyze
 
-Given that the package is a wrapper, you can still use the native `sentix_summarize()` function for a quick analysis on the joined data:
+To get the sentiment scores, you can use the native `sentix_summarize()` function for a quick analysis on the joined data:
 
 
 ```{r}
@@ -88,7 +88,8 @@ sentix_summarize(tidy_sent, simplify = FALSE)
 ```
 
 
-Or, if you prefer, and/or need custom metrics (e.g., standard deviation or median), you can manually group and summarize:
+Alternatively, if you prefer custom metrics (e.g., standard deviation or median), you can manually group and summarize:
+
 
 ```{r}
 # Manual summary with dplyr
@@ -103,7 +104,8 @@ tidy_sent %>%
 
 ## Polarity Analysis
 
-If you want to perform polarity analysis (counting positive vs negative words), retrieve the lexicon with `polarity = TRUE` (assigns "positive"/"negative" labels), and join as before.
+
+To perform polarity analysis (counting positive vs negative words), retrieve the lexicon with `polarity = TRUE` (assigns "positive"/"negative" labels), and join as before.
 
 ```{r}
 # Get MAL with polarity labels
@@ -118,9 +120,8 @@ tidy_text %>%
   head()
 ```
 
-To generate polarity labels from continuous scores in a custom way, you can use the `make_polarity()` function.
+It is also possible to generate polarity labels from continuous scores in a custom way, using the `make_polarity()` function. Here the threshold is set to `0.125` (positive scores above 0.125 are "positive", negative scores below -0.125 are "negative", and scores in between are "neutral"):
 
-Here we set a threshold of 0.125 (default is 0), and have both columns of scores and polarity labels:
 
 ```{r}
 mal_dict %>% 
@@ -137,6 +138,7 @@ get_elita() %>%
                 ~ make_polarity(.x))) %>% 
   tail()
 ```
+
 
 It is also possible to set different thresholds for positive and negative classifications, by providing a vector of two values, such as `c(0.125, -0.135)`.
 
@@ -165,8 +167,8 @@ Other helper functions include `df_to_valence()` and `df_to_polar()` for explici
 
 ```{r}
 # Convert MAL to a valence dictionary
-my_dict <- mal_dict  %>% 
-  df_to_dict()
+my_dict <- df_to_dict(mal_dict)
+  
 ```
 
 that is equivalent to:
@@ -181,23 +183,20 @@ textstat_valence(sentix_toks, dictionary = my_dict)
 ```
 
 
-
-The same can be also achieved in one step, when a polarity dictionary is desired:
-
-```{r}
-my_dict2 <- df_to_dict(polar_dict)
-```
-
-
-which is equivalent to:
+To get a polarity dictionary:
 
 ```{r eval=FALSE}
-get_sentix("MAL", polarity = TRUE) %>% 
+my_dict2 <- get_sentix("MAL", polarity = TRUE) %>% 
   # if there are other numeric columns, other than 'polarity'
   df_to_polar()
 ```
 
-If the name of the polarity column is different than "polarity", specify it with the `polar_field` argument.
+
+which is equivalent to applying `df_to_dict()` to the polarity version of the lexicon:
+
+```{r}
+my_dict2 <- df_to_dict(polar_dict)
+```
 
 
 ```{r}
