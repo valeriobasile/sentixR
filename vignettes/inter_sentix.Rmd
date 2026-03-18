@@ -43,7 +43,7 @@ library(tidytext)
 
 ### Get the Lexicon
 
-Use `get_sentix()` to retrieve the lexicon as a tidy tibble, with two only columns.
+Use `get_sentix()` to retrieve the lexicon as a tidy tibble, with only two columns.
 
 For `tidytext` workflows on raw text (without lemmatization), the **MAL** lexicon is preferred because it contains inflected forms, matching the output of standard tokenizers.
 
@@ -74,8 +74,7 @@ head(tidy_sent)
 
 Here, `left_join` is used to keep all words (even those without a score) so that the token count (`n_tokens`) remains accurate: `score` will be `NA` for words not found in the lexicon.
 
-Perform an inner join to match only words within the lexicon.
-
+Alternatively, an `inner_join()` can be used to keep only the words present in the lexicon.
 
 ### Analyze
 

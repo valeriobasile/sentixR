@@ -94,10 +94,10 @@ model <- udpipe::udpipe_load_model("italian-isdt-ud-2.5-191206.udpipe")
 
 ### With multiple texts
 
-The function, like *udpipe*, accepts as input single texts, multiple texts (a character vector, a list or a list of tokens), or data frames with `text` and `doc_id` columns.
+The function, like *udpipe*, accepts as input single texts, multiple texts (a character vector, a list, or a list of tokens), or data frames.
 
+`sentix_annotate()` simplifies the document ID management that is normally required by *udpipe*. If no identifiers are provided, it will automatically generate them. Alternatively, the user can explicitly pass a vector of IDs using the `docid_field` argument, which safely processes them before passing the data to `udpipe::udpipe()`.
 
-The function processes single texts and multiple texts, assigning a document ID to each one, and helps the user specify document identifiers, which are processed and safely passed to `udpipe::udpipe()`.
 
 ```{r}
 # Multiple texts
@@ -120,7 +120,10 @@ To get the full *udpipe* output, set `simplify = FALSE`.
 
 ### With dataframe
 
-*udpipe* accepts data frames with text and document ID columns (`text` and `doc_id`). `sentix_annotate()` also allows specifying the input column names. Note that the function extracts and processes only these two columns, ignoring other metadata.
+While *udpipe* expects data frames to have columns named `text and doc_id`, `sentix_annotate()` also allows specifying the input column names, using the `text_field` and `docid_field` arguments. 
+
+Note that the function extracts and processes only these two columns, ignoring other metadata, and that they will be renamed to `text` and `doc_id` in the output.
+
 
 ```{r data}
 data(recensioni_tv)
@@ -133,6 +136,8 @@ sentix_res <- sentix_annotate(recensioni_tv,
                               model = model)
 head(sentix_res)
 ```
+
+
 
 ```{r summarize}
 # Summarize sentiment per document
@@ -190,7 +195,7 @@ Sentix and MAL include words that were originally polypathic (with multiple sent
 The polypathy index (ordered factor) indicates the level of variation among the original scores:
 
 -   '0': The lemma had no duplicate entries in the lexicon.
--   '1' (Low Variation): Difference between the max and below the mean;
+-   '1' (Low Variation): Difference between the max and the min is below the mean;
 -   '2' (High Variation, No Ambivalence): Difference above the mean, same polarity.
 -   '3' (High Variation, Ambivalent): Difference above the mean, mixed polarities.
 
@@ -208,7 +213,7 @@ The index will be summarized as `ambiguity` score, calculated as `n_poly` / `n_s
 -   `n_poly`: Number of tokens with ambiguous tokens, based on the `ambiguity` level setting (default = 3, which indicates the highest ambiguity level `"3"`);
 -   `n_scored`: Number of tokens found in the lexicon.
 
-A higher `ambiguity` score in the summarized output indicates that a document relies heavily on words historically associated with mixed or contrasting sentiments, suggesting a more complex overall polarity.
+
 
 
 ```{r}
