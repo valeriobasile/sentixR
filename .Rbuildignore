@@ -1,0 +1,17 @@
+^.*\.Rproj$
+^\.Rproj\.user$
+references.bib
+references2.bib
+^.*\.quarto
+^.*\.vscode
+^LICENSE\.md$
+^doc$
+^Meta$
+.udpipe
+^\.Rd2pdf.*
+^tests/verify_installation\.R$
+^README\.Rmd$
+^README\.qmd$
+manifesto_apikey.txt
+^\.positai$
+^\.claude$

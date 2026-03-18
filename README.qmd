@@ -1,0 +1,170 @@
+---
+title: "sentixr"
+format: gfm
+execute:
+  warning: false
+  message: false
+  error: false
+bibliography: references.bib
+nocite: |
+  @zanchetta_morphit_2005, @vassallo_polarity_2020
+---
+
+<!-- badges: start -->
+
+[![License: GPL-3](https://img.shields.io/badge/License-GPL--3.0-yellow.svg)](https://opensource.org/license/gpl-3-0) [![Lifecycle: experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://lifecycle.r-lib.org/articles/stages.html#experimental)
+
+<!-- badges: end -->
+
+R package to perform sentiment analysis on Italian texts, including five lexicons in tidy format (tibbles): Sentix, MAL, ELIta VAD and basic emotions (Plutchik's wheel of emotions).
+
+## Overview
+
+The package provides two main functions to perform sentiment analysis on Italian texts:
+
+-   `sentix_annotate()`: Annotates a text or a dataframe of texts with sentiment scores from the selected lexicon, using *udpipe* for parsing, and *dplyr* for joining the lexicon.
+-   `sentix_summarize()`: Summarizes the sentiment scores from the annotated dataframe, providing overall sentiment metrics per document (or segments) and auxiliary metrics that can be used to evaluate the results, recompute scores, or apply custom aggregation strategies.
+
+It also provides utility functions to manage the included lexicons, allowing them to be easily used also within other frameworks such as *Tidytext* and *Quanteda*.
+
+-   `get_sentix()`, `get_elita()` and `make_polarity()`, to extract and use them in custom analyses;
+-   `df_to_valence()`, `df_to_polar()` (plus the wrapper `df_to_dict()`) to convert tidy lexicons into Quanteda dictionaries.
+
+## Install
+
+``` r
+remotes::install_github("valeriobasile/sentixr", dependencies = TRUE, 
+                         build_vignettes = TRUE)
+```
+
+## Lexicons
+
+While the package is published under a GPL-3.0 license, lexicons are provided under separate terms (CC BY-SA and CC0 1.0 Universal).
+
+Please check the individual lexicon documentation for details.
+
++---------------+---------------------------------------------------------------+-------------------------+---------------------------------+-------------------------------------------------------------------------------------------------------+
+| Lexicon       |                                                               | Entries                 | Features                        | Source and License                                                                                    |
++===============+===============================================================+=========================+=================================+=======================================================================================================+
+| `sentix`      | Sentix 3.1 [@basile_sentiment_2013; @basile_sentix_2025]      | 68,190 lemmas           | Scores (-1, 1), polypathy index | [GitHub](https://github.com/valeriobasile/sentix), [Zenodo](https://doi.org/10.5281/zenodo.15609185), |
+|               |                                                               |                         |                                 |                                                                                                       |
+|               |                                                               |                         |                                 | CC BY-SA                                                                                              |
++---------------+---------------------------------------------------------------+-------------------------+---------------------------------+-------------------------------------------------------------------------------------------------------+
+| `MAL`         | MAL 3.1 [@vassallo_tenuousness_2019; @vassallo_polarity_2020] | 295,032 inflected forms | Inherited from Sentix           | [Zenodo](https://doi.org/10.5281/zenodo.18709687 "repository")                                        |
+|               |                                                               |                         |                                 |                                                                                                       |
+|               |                                                               |                         |                                 | CC BY-SA                                                                                              |
++---------------+---------------------------------------------------------------+-------------------------+---------------------------------+-------------------------------------------------------------------------------------------------------+
+| `elita_basic` | ELIta [@20.500.11752/OPEN-1036]                               | 6,905 lemmas + emojis   | Plutchik's emotions (0, 1)      | [GitHub](https://github.com/elianadipalma/ELIta)                                                      |
+|               |                                                               |                         |                                 |                                                                                                       |
+|               |                                                               |                         |                                 | CC0 1.0 Universal                                                                                     |
++---------------+---------------------------------------------------------------+-------------------------+---------------------------------+-------------------------------------------------------------------------------------------------------+
+| `elita_VAD`   | —                                                             | 6,905 lemmas + emojis   | VAD (-4 / +4)                   | [GitHub](https://github.com/elianadipalma/ELIta)                                                      |
+|               |                                                               |                         |                                 |                                                                                                       |
+|               |                                                               |                         |                                 | CC0 1.0 Universal                                                                                     |
++---------------+---------------------------------------------------------------+-------------------------+---------------------------------+-------------------------------------------------------------------------------------------------------+
+
+## Usage
+
+```{r}
+library(sentixr)
+```
+
+### Main workflow
+
+The sentiment analysis workflow consists of two main steps: annotation (`sentix_annotate`) and summarization (`sentix_summarize`).
+
+```{r}
+# Single text
+# annotate with defaults
+sentix_annotate("Oggi è una bella giornata. Esco a fare una passeggiata") |>
+  # summarize by document - default
+  sentix_summarize()
+```
+
+### Annotate
+
+`sentix_annotate()` annotates texts with sentiment scores from the selected lexicon, after parsing them with *udpipe*. For large corpora, the user may optionally specify the number of cores to use, via the argument `parallel.cores`, which is inherited from *udpipe* and passed to `udpipe::udpipe()`.
+
+#### Managing the udpipe model
+
+The `model` argument allows specifying a custom **udpipe model**. If no model is given, the function will automatically download the default Italian udpipe model. After the first run, the downloaded model can be reused.
+
+```{r eval = FALSE}
+# Using a model in the working directory
+sentix_annotate(testi, model = "local")
+```
+
+```{r}
+# Loading a pre-downloaded model
+model <- udpipe::udpipe_load_model("italian-isdt-ud-2.5-191206.udpipe")
+```
+
+#### With multiple texts and dataframe
+
+The function, like *udpipe*, accepts as input single texts, multiple texts (a character vector, a list or a list of tokens), or dataframes with `text` and `doc_id` columns.
+
+The function also helps the user specify custom column names and manage document identifiers, which are safely passed to `udpipe::udpipe()`. Note that, however, other columns in the dataframe are ignored.
+
+```{r}
+# Example dataframe with doc_id and text fields
+data(recensioni_tv)
+
+# Annotate the dataframe directly}
+anno_df <- sentix_annotate(
+  recensioni_tv,
+  # loaded model
+  model = model
+)
+
+head(anno_df)
+```
+
+#### With a different lexicon
+
+By default, `sentix_annotate()` uses the Sentix lexicon. To use a different lexicon, specify it with the `dict` argument.
+
+```{r}
+# Use ELIta lexicon with VAD scores
+anno_vad <- sentix_annotate(recensioni_tv, model = model, dict = "elita_VAD")
+```
+
+### Summarize
+
+`sentix_summarize()` computes overall sentiment scores and auxiliary metrics per document (or other segments, via the argument `by`) from the annotated dataframe.
+
+```{r}
+sentix_summarize(
+  anno_df,
+  # summarize by sentence
+  by = c("doc_id", "sentence_id")
+)
+```
+
+When using lexicons with multiple features (e.g., ELIta), all features are summarized.
+
+```{r}
+sentix_summarize(anno_vad)
+```
+
+## How to Cite
+
+If you use *sentixr* in your research, please cite it as follows:
+
+Vardanega, A., Basile, V., Vassallo, M., Gabrieli, G. & Di Palma, E. (2026). sentixr (Versione 0.1.0) https://github.com/valeriobasile/sentixR
+
+## Authors
+
+-   Vardanega, Agnese (Università di Teramo) (mantainer)
+
+-   Basile, Valerio (Università di Torino)
+
+-   Vassallo, Marco (CREA-PB)
+
+-   Gabrieli, Giuliano (CREA-PB)
+
+-   Di Palma, Eliana (Università di Torino)
+
+
+
+
+## References

@@ -1,3 +1,0 @@
-import(udpipe)
-import(dplyr)
-export(sentix.sentiment, load.udpipe, sentix.df.sentiment)

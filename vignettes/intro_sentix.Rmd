@@ -1,0 +1,247 @@
+---
+title: "Introduction to sentixr"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Introduction to sentixr}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE, warning = F, message = F,
+  comment = "#>"
+)
+```
+
+`sentixr` is a package designed to simplify sentiment analysis in Italian using a variety of lexicons (Sentix, MAL, ELIta).
+
+This vignette illustrates the core workflow using the high-level functions `sentix_annotate()` and `sentix_summarize()`, and some of the main features of `sentix_annotate()`.
+
+See also the [vignette](inter_sentix.html) on using the package with `tidytext` and `quanteda`.
+
+## Basic Workflow
+
+The typical workflow consists of two main steps: annotation and summarization.
+
+```{r setup}
+library(sentixr)
+```
+
+```{r}
+testo <- "Oggi è una bella giornata. Esco a fare una passeggiata"
+```
+
+```{r}
+frase_ann <- sentix_annotate(testo, 
+                             # set the document ID
+                             docid_field = "frase")
+head(frase_ann)
+```
+
+```{r}
+sentix_summarize(frase_ann)
+```
+
+## `sentix_summarize()`
+
+`sentix_summarize()` computes overall sentiment scores and auxiliary metrics per document (or other segments, via the argument `by`) from the annotated dataframe. The default behavior is to summarize by document.
+
+By default, `sentix_summarize()` returns
+
+-   `sentiment`: The average sentiment score for the document.
+-   `n_tokens`: Total number of tokens (excluding punctuation).
+-   `n_scored`: Number of tokens found in the lexicon.
+
+To obtain only sentiment scores, set `simplify = TRUE`:
+
+```{r}
+sentix_summarize(frase_ann, 
+                 simplify = TRUE)
+```
+
+
+To get scores by sentences (or other segments) within each document, set the `by` argument:
+
+```{r}
+sentix_summarize(frase_ann,
+                 by = c("doc_id", "sentence_id"))
+```
+Note that *udpipe* assigns sentence IDs starting from 1 for each document, so sentence IDs will repeat across documents. 
+
+## `sentix_annotate()`
+
+The `sentix_annotate()` function performs tokenization and lemmatization (via `udpipe`), and then joins the result with one of the available sentiment lexicons. By default, it uses Sentix.
+
+The output is a dataframe where each row is a token. It is a simplified version of the full `udpipe` output, plus the sentiment score(s).
+
+For large corpora, the user may optionally specify the number of cores to use, via the argument `parallel.cores`, which is inherited from *udpipe* and passed to `udpipe::udpipe()`.
+
+### Managing udpipe model
+
+If no model is given, the function automatically downloads and uses the default Italian udpipe model. After the first run, the downloaded model can be passed with `model = "local"`:
+
+```{r eval = FALSE}
+sentix_annotate(recensioni_tv, model = "local")
+```
+
+To load the downloaded model, or any other udpipe model, manually, use `udpipe::udpipe_load_model()`:
+
+```{r}
+# Load the model manually
+model <- udpipe::udpipe_load_model("italian-isdt-ud-2.5-191206.udpipe")
+```
+
+### With multiple texts
+
+The function, like *udpipe*, accepts as input single texts, multiple texts (a character vector, a list, or a list of tokens), or data frames.
+
+`sentix_annotate()` simplifies the document ID management that is normally required by *udpipe*. If no identifiers are provided, it will automatically generate them. Alternatively, the user can explicitly pass a vector of IDs using the `docid_field` argument, which safely processes them before passing the data to `udpipe::udpipe()`.
+
+
+```{r}
+# Multiple texts
+testi <- c("Oggi è una bella giornata. Esco a fare una passeggiata", 
+           "Non mi piace la pioggia, mi rende triste.")
+sentix_annotate(testi,
+                # loaded model
+                model = model) |> head()
+```
+
+```{r}
+sentix_annotate(testi,
+                model = model,
+                # to specify document IDs
+                docid_field = paste0("doc_", seq_along(testi))
+) |> head()
+```
+
+To get the full *udpipe* output, set `simplify = FALSE`.
+
+### With dataframe
+
+While *udpipe* expects data frames to have columns named `text and doc_id`, `sentix_annotate()` also allows specifying the input column names, using the `text_field` and `docid_field` arguments. 
+
+Note that the function extracts and processes only these two columns, ignoring other metadata, and that they will be renamed to `text` and `doc_id` in the output.
+
+
+```{r data}
+data(recensioni_tv)
+recensioni_tv
+```
+
+```{r annotate}
+# Annotate the dataframe
+sentix_res <- sentix_annotate(recensioni_tv, 
+                              model = model)
+head(sentix_res)
+```
+
+
+
+```{r summarize}
+# Summarize sentiment per document
+sentix_summarize(sentix_res)
+```
+
+### Using Different Lexicons
+
+Other lexicons available in `sentixr` can be used with the `dict` argument.
+
+The **MAL** lexicon contains inflected forms rather than lemmas. The function automatically handles this by joining on the token column.
+
+```{r mal}
+# Use MAL lexicon
+anno_mal <- sentix_annotate(recensioni_tv, 
+                            model = model, dict = "MAL")
+head(anno_mal)
+```
+
+```{r}
+# Summarize
+summary_mal <- sentix_summarize(anno_mal)
+
+summary_mal
+```
+
+When using the **ELIta** family lexicons, the functions will produce scores and statistics for each dimension.
+
+```{r elita}
+# Use ELIta VAD lexicon
+anno_vad <- sentix_annotate(recensioni_tv, 
+                            model = model,
+                            dict = "elita_VAD")
+head(anno_vad)
+```
+
+```{r}
+# Summarize 
+sentix_summarize(anno_vad)
+```
+
+`elita_VAD` scores are automatically rescaled to the -1 to 1 range for consistency with other lexicons. It is also possible to use the original -4/+4 scale by setting `rescale = "none"`.
+
+```{r}
+sentix_annotate(recensioni_tv, 
+                model = model,
+                dict = "elita_VAD",
+                rescale = "none") |> head()
+```
+
+## Polypathy Handling
+
+Sentix and MAL include words that were originally polypathic (with multiple sentiment scores derived from SentiWordNet synsets), and that have been reduced to a single score (see Basile and Nissim 2013; Basile et al. 2025).
+
+The polypathy index (ordered factor) indicates the level of variation among the original scores:
+
+-   '0': The lemma had no duplicate entries in the lexicon.
+-   '1' (Low Variation): Difference between the max and the min is below the mean;
+-   '2' (High Variation, No Ambivalence): Difference above the mean, same polarity.
+-   '3' (High Variation, Ambivalent): Difference above the mean, mixed polarities.
+
+You can enable polypathy handling by setting `polypathy = TRUE`. This will return another column in the output dataframe:
+
+```{r}
+anno_poly <- sentix_annotate(recensioni_tv, 
+                            model = model, polypathy = TRUE)
+
+head(anno_poly)
+```
+
+The index will be summarized as `ambiguity` score, calculated as `n_poly` / `n_scored`, where:
+
+-   `n_poly`: Number of tokens with ambiguous tokens, based on the `ambiguity` level setting (default = 3, which indicates the highest ambiguity level `"3"`);
+-   `n_scored`: Number of tokens found in the lexicon.
+
+
+
+
+```{r}
+sentix_summarize(anno_poly,
+                 # the default value
+                 ambiguity = 3)
+```
+
+A higher `ambiguity` score in the summarized output indicates that a document relies heavily on words historically associated with mixed or contrasting sentiments, suggesting a more nuanced or complex overall polarity.
+
+## References
+
+<div id="refs" class="references csl-bib-body hanging-indent"
+entry-spacing="0">
+
+<div id="ref-basile_sentiment_2013" class="csl-entry">
+
+Basile, Valerio, and Malvina Nissim. 2013. “Sentiment Analysis on
+Italian Tweets.” In *Proceedings of the 4th Workshop on Computational
+Approaches to Subjectivity, Sentiment and Social Media Analysis*,
+100–107. <https://aclanthology.org/W13-1614/>.
+
+</div>
+
+<div id="ref-basile_sentix_2025" class="csl-entry">
+
+Basile, Valerio, Malvina Nissim, Cristina Bosco, Marco Vassallo, and
+Giuliano Gabrieli. 2025. “Sentix.”
+<https://github.com/valeriobasile/sentix>.
+
+</div>
