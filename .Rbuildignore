@@ -12,6 +12,5 @@ references2.bib
 ^tests/verify_installation\.R$
 ^README\.Rmd$
 ^README\.qmd$
-manifesto_apikey.txt
 ^\.positai$
 ^\.claude$
