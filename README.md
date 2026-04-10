@@ -10,7 +10,7 @@ experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](h
 
 <!-- badges: end -->
 
-R package to perform sentiment analysis on Italian texts, including five
+R package to perform sentiment analysis on Italian texts, including four
 lexicons in tidy format (tibbles): Sentix, MAL, ELIta VAD and basic
 emotions (Plutchik’s wheel of emotions).
 
@@ -175,9 +175,10 @@ data(recensioni_tv)
 
 # Annotate the dataframe directly}
 anno_df <- sentix_annotate(
-  recensioni_tv, 
-  # loaded model 
-  model = model)
+  recensioni_tv,
+  # loaded model
+  model = model
+)
 
 head(anno_df)
 ```
@@ -197,9 +198,7 @@ different lexicon, specify it with the `dict` argument.
 
 ``` r
 # Use ELIta lexicon with VAD scores
-anno_vad <- sentix_annotate(recensioni_tv,
-                            model = model, 
-                            dict = "elita_VAD")
+anno_vad <- sentix_annotate(recensioni_tv, model = model, dict = "elita_VAD")
 ```
 
 ### Summarize
@@ -209,9 +208,11 @@ metrics per document (or other segments, via the argument `by`) from the
 annotated dataframe.
 
 ``` r
-sentix_summarize(anno_df,
-                 # summarize by sentence
-                 by = c("doc_id", "sentence_id"))
+sentix_summarize(
+  anno_df,
+  # summarize by sentence
+  by = c("doc_id", "sentence_id")
+)
 ```
 
     # A tibble: 7 × 5

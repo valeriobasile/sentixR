@@ -16,7 +16,7 @@ nocite: |
 
 <!-- badges: end -->
 
-R package to perform sentiment analysis on Italian texts, including five lexicons in tidy format (tibbles): Sentix, MAL, ELIta VAD and basic emotions (Plutchik's wheel of emotions).
+R package to perform sentiment analysis on Italian texts, including four lexicons in tidy format (tibbles): Sentix, MAL, ELIta VAD and basic emotions (Plutchik's wheel of emotions).
 
 ## Overview
 
@@ -163,8 +163,5 @@ Vardanega, A., Basile, V., Vassallo, M., Gabrieli, G. & Di Palma, E. (2026). sen
 -   Gabrieli, Giuliano (CREA-PB)
 
 -   Di Palma, Eliana (Università di Torino)
-
-
-
 
 ## References
