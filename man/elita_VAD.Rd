@@ -21,7 +21,7 @@ data(elita_VAD)
 }
 \description{
 A dataset containing scores for 6,905
-Italian lexical entries (lemmas and emojis), the VAD dimensional approach
+Italian lexical entries (lemmas and emojis) on the VAD dimensions
 (Valence, Arousal, and Dominance; see Russell 1980)
 
 This dataset is a subset of the broader ELIta framework.

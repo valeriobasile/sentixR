@@ -14,9 +14,16 @@ knitr::opts_chunk$set(
 )
 ```
 
-`sentixr` is a package designed to simplify sentiment analysis in Italian using a variety of lexicons (Sentix, MAL, ELIta).
+`sentixr` is a package designed to simplify sentiment analysis in Italian using a variety of lexicons: Sentix, MAL, ELIta VAD and ELIta basic.
 
-This vignette illustrates the core workflow using the high-level functions `sentix_annotate()` and `sentix_summarize()`, and some of the main features of `sentix_annotate()`.
+Sentix includes 68,190 Italian lemmas (field `lemma`) with associated affective
+scores and an index of polypathy. MAL expands Sentix with inflected forms from *Morph-it!*, and can be used without lemmatization.
+
+ELIta VAD includes scores for 6,905 Italian lexical entries (lemmas and emojis) on the VAD dimensions
+(Valence, Arousal, and Dominance), while ELIta basic focuses on the eight basic emotions of Plutchik’s wheel together with the
+dyad _love_.
+
+This vignette illustrates the core workflow using the functions `sentix_annotate()` and `sentix_summarize()`, and some of the main features of `sentix_annotate()`.
 
 See also the [vignette](inter_sentix.html) on using the package with `tidytext` and `quanteda`.
 
@@ -71,7 +78,7 @@ Note that *udpipe* assigns sentence IDs starting from 1 for each document, so se
 
 ## `sentix_annotate()`
 
-The `sentix_annotate()` function performs tokenization and lemmatization (via `udpipe`), and then joins the result with one of the available sentiment lexicons. By default, it uses Sentix.
+The `sentix_annotate()` function performs tokenization and lemmatization (via `udpipe`), and then joins the result with one of the available sentiment lexicons. By default, it uses the Sentix lexicon.
 
 The output is a dataframe where each row is a token. It is a simplified version of the full `udpipe` output, plus the sentiment score(s).
 
@@ -96,7 +103,7 @@ model <- udpipe::udpipe_load_model("italian-isdt-ud-2.5-191206.udpipe")
 
 The function, like *udpipe*, accepts as input single texts, multiple texts (a character vector, a list, or a list of tokens), or data frames.
 
-`sentix_annotate()` simplifies the document ID management that is normally required by *udpipe*. If no identifiers are provided, it will automatically generate them. Alternatively, the user can explicitly pass a vector of IDs using the `docid_field` argument, which safely processes them before passing the data to `udpipe::udpipe()`.
+`sentix_annotate()` simplifies the document ID management that is normally required by *udpipe*. In particular, the user can explicitly pass a vector of IDs using the `docid_field` argument, which safely processes them before passing the data to `udpipe::udpipe()`.
 
 
 ```{r}

@@ -20,6 +20,7 @@ Useful links:
 
 Authors:
 \itemize{
+  \item Agnese Vardanega \email{avardanega@unite.it} (\href{https://orcid.org/0000-0002-1419-9896}{ORCID})
   \item Valerio Basile \email{valerio.basile@unito.it} (\href{https://orcid.org/0000-0001-8110-6832}{ORCID})
   \item Eliana Di Palma \email{eliana.dipalma@unito.it} (\href{https://orcid.org/0000-0003-2154-2696}{ORCID})
   \item Giuliano Gabrieli \email{giuliano.gabrieli@crea.gov.it} (\href{https://orcid.org/0009-0005-1153-5662}{ORCID})
