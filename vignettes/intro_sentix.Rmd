@@ -251,4 +251,4 @@ Basile, Valerio, Malvina Nissim, Cristina Bosco, Marco Vassallo, and
 Giuliano Gabrieli. 2025. “Sentix.”
 <https://github.com/valeriobasile/sentix>.
 
-</div>
+</div></div>

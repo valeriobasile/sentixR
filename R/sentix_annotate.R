@@ -335,7 +335,7 @@ sentix_annotate <- function(x,
     # check existing columns
     cols_to_keep <- intersect(cols_to_keep, names(annotated))
     
-    annotated <- annotated %>%
+    annotated <- annotated |>
       dplyr::select(dplyr::all_of(cols_to_keep))
   }
   

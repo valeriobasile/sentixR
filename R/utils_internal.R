@@ -3,17 +3,10 @@
 #' @keywords internal
 #' @noRd
 
-# Checks if quanteda and quanteda.sentiment are installed
-# only in functions that convert data frames to dictionaries
+# Checks if quanteda is installed
 .check_quanteda_pkgs <- function() {
   if (!requireNamespace("quanteda", quietly = TRUE)) {
     stop("Package `quanteda` is required for this function.", call. = FALSE)
-  }
-  if (!requireNamespace("quanteda.sentiment", quietly = TRUE)) {
-    stop(
-      "Package `quanteda.sentiment` is required. Install it with: remotes::install_github('quanteda/quanteda.sentiment').",
-      call. = FALSE
-    )
   }
 }
 

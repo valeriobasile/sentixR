@@ -1,10 +1,10 @@
 Package: sentixr
 Title: Lexicons and Tools for Italian Sentiment Analysis
-Version: 0.1.0
+Version: 0.2.0
 Description: Lexicons and tools to perform sentiment analysis on Italian texts. Lexicons included: Sentix 3.0, MAL, ElIta VAD and basic emotions (Plutchik's wheel of emotions).
 Language: en, it
 Depends: 
-    R (>= 3.5),
+    R (>= 4.1),
     dplyr,
     tidyselect,
     rlang
@@ -19,9 +19,7 @@ Suggests:
     testthat (>= 3.0.0),
     remotes,
     quanteda,
-    quanteda.sentiment,
     mockery
-Remotes: quanteda/quanteda.sentiment
 VignetteBuilder: knitr
 License: GPL (>= 3)
 Encoding: UTF-8

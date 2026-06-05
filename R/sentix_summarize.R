@@ -169,8 +169,8 @@ sentix_summarize <- function(x,
   
   
   # sentiment
-  summary_df <- x %>%
-    dplyr::group_by(dplyr::across(dplyr::all_of(by))) %>%
+  summary_df <- x |>
+    dplyr::group_by(dplyr::across(dplyr::all_of(by))) |>
     dplyr::summarise(
       # Scores
       dplyr::across(dplyr::all_of(score_cols),
@@ -200,7 +200,7 @@ sentix_summarize <- function(x,
   
   # ambiguity
   if ("polypathy_index" %in% names(x) && ambiguity != "none") {
-    summary_df <- summary_df %>%
+    summary_df <- summary_df |>
       dplyr::mutate(
         ambiguity = dplyr::if_else(.data$n_scored > 0, .data$n_poly / .data$n_scored, 0)
       )
@@ -222,5 +222,5 @@ sentix_summarize <- function(x,
     }
   }
   
-  return(summary_df %>% dplyr::select(dplyr::all_of(cols_to_keep)))
+  return(summary_df |> dplyr::select(dplyr::all_of(cols_to_keep)))
 }

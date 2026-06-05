@@ -1,10 +1,13 @@
-#' Convert a data frame to a quanteda dictionary
+#' Convert a data frame to a Quanteda dictionary with polarity or valence
 #'
 #' @description
-#' Converts a data frame (tibble) containing a lexicon into a quanteda
-#' dictionary.(see  \code{\link[quanteda]{dictionary}}).
-#' Requires *Quanteda*, and the `quanteda.sentiment` package (available on
-#' [GitHub](https://github.com/quanteda/quanteda.sentiment)).
+#' Converts a data frame (tibble) containing a lexicon into a Quanteda dictionary
+#' with valence or polarity. 
+#' Requires the package *Quanteda*. If the `quanteda.sentiment` package is also 
+#' installed,
+#' the polarity or valence attributes will be detected and assigned automatically. 
+#' Otherwise, 
+#' a standard Quanteda dictionary will be created.
 #'
 #' The function is a wrapper for [df_to_valence()] and [df_to_polar()],
 #' automatically determining, where possible,
@@ -36,22 +39,20 @@
 #' *   **Valence Dictionaries**: The names of the numeric columns are used
 #'     as dictionary keys. When there is only one
 #'     numeric column, the `word_field` is used as the key name
-#'     (see \code{\link[quanteda.sentiment]{valence}}).
+#'     (see `quanteda.sentiment::valence` if installed).
 #' *   **Polarity Dictionaries**:
 #'     *  The character or factor column (other
 #'        than the `word_field`) is used to group terms into the categories
 #'        (`polar_field`) that are then associated with the standard
 #'        "polarity" attribute ("`pos`", "`neg`", optionally "`neut`";
-#'        see \code{\link[quanteda.sentiment]{polarity}}).
+#'        see `quanteda.sentiment::polarity` if installed).
 #'     *  The "polarity" attribute is assigned via the `polar_map` argument, or
 #'        automatically if the categories in the `polar_field` are explicit:
 #'        "positive", "negative" (and, optionally, "neutral"; case-insensitive).
 #'
 #' @seealso
 #'  [df_to_dict()], [df_to_polar()],
-#'  \code{\link[quanteda]{dictionary}},
-#'  \code{\link[quanteda.sentiment]{textstat_valence}},
-#'  \code{\link[quanteda.sentiment]{textstat_polarity}}
+#'  \code{\link[quanteda]{dictionary}}
 #'
 #' @return A `quanteda::dictionary2` object.
 #' @export

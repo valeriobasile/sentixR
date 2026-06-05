@@ -2,7 +2,7 @@
 % Please edit documentation in R/df_to_polar.R
 \name{df_to_polar}
 \alias{df_to_polar}
-\title{Convert a data frame to a quanteda polarity dictionary}
+\title{Convert a data frame to a Quanteda polarity dictionary}
 \usage{
 df_to_polar(x, word_field = NULL, polar_field = "polarity", polar_map = NULL)
 }
@@ -29,10 +29,12 @@ function will attempt to auto-detect the mapping.}
 A \code{quanteda::dictionary2} object.
 }
 \description{
-Converts a data frame (tibble) containing a lexicon into a quanteda
-polarity dictionary.(see  \code{\link[quanteda]{dictionary}}).
-Requires \emph{Quanteda}, and the \code{quanteda.sentiment} package (available on
-\href{https://github.com/quanteda/quanteda.sentiment}{GitHub}).
+Converts a data frame (tibble) containing a lexicon into a Quanteda dictionary
+with polarity, to be used with \code{quanteda.sentiment::textstat_polarity()}.
+Requires the package \emph{Quanteda}. If the \code{quanteda.sentiment} package is also
+installed,
+the polarity attribute will be detected and assigned automatically.
+Otherwise, a standard Quanteda dictionary will be created.
 
 \strong{Note:} The function cannot handle duplicate entries,
 and will remove rows with NAs.
@@ -44,7 +46,7 @@ The function handles the sentiment categories as follows:
 than the \code{word_field}) is used to group terms into the categories
 (\code{polar_field}) that are then associated with the standard
 "polarity" attribute ("\code{pos}", "\code{neg}", optionally "\code{neut}";
-see \code{\link[quanteda.sentiment]{polarity}}).
+see \code{quanteda.sentiment::polarity} if installed).
 \item The "polarity" attribute is assigned via the \code{polar_map} argument, or
 automatically if the categories in the \code{polar_field} are explicit:
 "positive", "negative" (and, optionally, "neutral"; case-insensitive).
@@ -52,15 +54,13 @@ automatically if the categories in the \code{polar_field} are explicit:
 }
 \examples{
 \dontrun{
-
 # Create a polarity dictionary from sentix
 my_dict <- get_sentix(polarity = TRUE)
-df_to_polar(my_dict)
+my_pol_dict <- df_to_polar(my_dict)
 }
 }
 \seealso{
 \code{\link[=df_to_dict]{df_to_dict()}}, \code{\link[=df_to_valence]{df_to_valence()}},
-\code{\link[quanteda]{dictionary}},
-\code{\link[quanteda.sentiment]{textstat_polarity}}
+\code{\link[quanteda]{dictionary}}
 }
 \keyword{functions}

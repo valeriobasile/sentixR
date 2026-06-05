@@ -27,7 +27,7 @@
 #' @return A `tibble`.
 #'
 #' @export
-#' @importFrom dplyr %>% select any_of mutate across
+#' @importFrom dplyr select any_of mutate across
 #' @importFrom rlang :=
 #' @importFrom tidyselect where
 #'
@@ -69,13 +69,13 @@ get_sentix <- function(dict = "sentix",
   }
   
   if (polarity) {
-    lexicon <- lexicon %>%
+    lexicon <- lexicon |> 
       mutate(!!polar_field := make_polarity(score, threshold = threshold))
     cols_to_keep <- c(cols_to_keep, polar_field)
     cols_to_keep <- setdiff(cols_to_keep, "score")
   }
   
-  lexicon <- lexicon %>%
+  lexicon <- lexicon |> 
     select(any_of(cols_to_keep))
   
   return(lexicon)

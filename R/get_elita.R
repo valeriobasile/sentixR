@@ -25,7 +25,7 @@
 #' @return A `tibble`.
 #'
 #' @export
-#' @importFrom dplyr %>% mutate across
+#' @importFrom dplyr mutate across
 #' @importFrom tidyselect where
 #'
 #' @seealso
@@ -57,10 +57,10 @@ get_elita <- function(dict = "elita_VAD", rescale = "default") {
   if (dict == "elita_VAD") {
     if (rescale == "centered" ||
         (rescale == "default" && dict == "elita_VAD")) {
-      lexicon <- lexicon %>%
+      lexicon <- lexicon |>
         mutate(across(where(is.numeric), ~ .x / 4))
     } else if (rescale == "normalized") {
-      lexicon <- lexicon %>%
+      lexicon <- lexicon |>
         mutate(across(where(is.numeric), ~ .x / max(abs(.x), na.rm = TRUE)))
     } else if (rescale == "none" && dict == "elita_VAD") {
       

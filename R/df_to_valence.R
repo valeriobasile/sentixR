@@ -1,10 +1,12 @@
-#' Convert a data frame to a quanteda valence dictionary
+#' Convert a data frame to a Quanteda valence dictionary
 #'
 #' @description
-#' Converts a data frame (tibble) containing a lexicon into a quanteda
-#' valence dictionary.(see  \code{\link[quanteda]{dictionary}}).
-#' Requires *Quanteda*, and the `quanteda.sentiment` package (available on
-#' [GitHub](https://github.com/quanteda/quanteda.sentiment)).
+#' Converts a data frame (tibble) containing a lexicon into a Quanteda dictionary 
+#' with valence, to be used with `quanteda.sentiment::textstat_valence()`.
+#' Requires the package *Quanteda*. If the `quanteda.sentiment` package is also 
+#' installed,
+#' the valence attribute will be detected and assigned automatically. Otherwise, 
+#' a standard Quanteda dictionary will be created.
 #'
 #' **Note:** The function cannot handle duplicate entries,
 #' and will remove rows with NAs.
@@ -20,12 +22,12 @@
 #' @details
 #' The names of the numeric columns are used as dictionary keys. When there is
 #' only one numeric column, the `word_field` is used as the key name
-#' (see \code{\link[quanteda.sentiment]{valence}}).
+#' (see `quanteda.sentiment::valence` if installed).
 #'
+#' 
 #' @seealso
 #' [df_to_dict()], [df_to_polar()],
-#'  \code{\link[quanteda]{dictionary}},
-#'  \code{\link[quanteda.sentiment]{textstat_valence}}
+#'  \code{\link[quanteda]{dictionary}}
 #'
 #' @return A `quanteda::dictionary2` object.
 #' @export
@@ -71,6 +73,11 @@ df_to_valence <- function(x, word_field = NULL) {
     stop("No valid entries found for valence dictionary.")
   }
   quanteda_dict <- quanteda::dictionary(dict_list)
-  quanteda.sentiment::valence(quanteda_dict) <- valence_list
+  pkg <- "quanteda.sentiment"
+  if (requireNamespace(pkg, quietly = TRUE)) {
+    ns <- asNamespace(pkg)
+    `valence<-` <- get("valence<-", envir = ns)
+    quanteda_dict <- `valence<-`(quanteda_dict, value = valence_list)
+  }
   return(quanteda_dict)
 }

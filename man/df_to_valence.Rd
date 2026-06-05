@@ -2,7 +2,7 @@
 % Please edit documentation in R/df_to_valence.R
 \name{df_to_valence}
 \alias{df_to_valence}
-\title{Convert a data frame to a quanteda valence dictionary}
+\title{Convert a data frame to a Quanteda valence dictionary}
 \usage{
 df_to_valence(x, word_field = NULL)
 }
@@ -20,10 +20,12 @@ If neither is found, it selects the first character column available.}
 A \code{quanteda::dictionary2} object.
 }
 \description{
-Converts a data frame (tibble) containing a lexicon into a quanteda
-valence dictionary.(see  \code{\link[quanteda]{dictionary}}).
-Requires \emph{Quanteda}, and the \code{quanteda.sentiment} package (available on
-\href{https://github.com/quanteda/quanteda.sentiment}{GitHub}).
+Converts a data frame (tibble) containing a lexicon into a Quanteda dictionary
+with valence, to be used with \code{quanteda.sentiment::textstat_valence()}.
+Requires the package \emph{Quanteda}. If the \code{quanteda.sentiment} package is also
+installed,
+the valence attribute will be detected and assigned automatically. Otherwise,
+a standard Quanteda dictionary will be created.
 
 \strong{Note:} The function cannot handle duplicate entries,
 and will remove rows with NAs.
@@ -31,7 +33,7 @@ and will remove rows with NAs.
 \details{
 The names of the numeric columns are used as dictionary keys. When there is
 only one numeric column, the \code{word_field} is used as the key name
-(see \code{\link[quanteda.sentiment]{valence}}).
+(see \code{quanteda.sentiment::valence} if installed).
 }
 \examples{
 \dontrun{
@@ -42,7 +44,6 @@ elita_dict <- df_to_valence(elita_VAD)
 }
 \seealso{
 \code{\link[=df_to_dict]{df_to_dict()}}, \code{\link[=df_to_polar]{df_to_polar()}},
-\code{\link[quanteda]{dictionary}},
-\code{\link[quanteda.sentiment]{textstat_valence}}
+\code{\link[quanteda]{dictionary}}
 }
 \keyword{functions}

@@ -1,26 +1,37 @@
 test_that("df_to_valence creates a dictionary", {
     skip_if_not_installed("quanteda")
-    skip_if_not_installed("quanteda.sentiment")
 
     df <- data.frame(word = c("good", "bad"), score = c(1, -1), stringsAsFactors = FALSE)
     dict <- df_to_valence(df)
 
     expect_s4_class(dict, "dictionary2")
+    
+    pkg <- "quanteda.sentiment"
+    if (requireNamespace(pkg, quietly = TRUE)) {
+        ns <- asNamespace(pkg)
+        valence_fun <- get("valence", envir = ns)
+        expect_equal(valence_fun(dict)$word["good"], c(good = 1))
+    }
 })
 
 test_that("df_to_polar creates a dictionary", {
     skip_if_not_installed("quanteda")
-    skip_if_not_installed("quanteda.sentiment")
 
     df <- data.frame(word = c("good", "bad"), polarity = c("pos", "neg"), stringsAsFactors = FALSE)
     dict <- df_to_polar(df)
 
     expect_s4_class(dict, "dictionary2")
+    
+    pkg <- "quanteda.sentiment"
+    if (requireNamespace(pkg, quietly = TRUE)) {
+        ns <- asNamespace(pkg)
+        polarity_fun <- get("polarity", envir = ns)
+        expect_equal(polarity_fun(dict)$pos, "pos")
+    }
 })
 
 test_that("df_to_dict auto-detects type", {
     skip_if_not_installed("quanteda")
-    skip_if_not_installed("quanteda.sentiment")
 
     # Valence
     df_val <- data.frame(word = c("good"), score = 1, stringsAsFactors = FALSE)

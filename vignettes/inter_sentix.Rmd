@@ -59,13 +59,13 @@ Use `tidytext::unnest_tokens()` to split the text into words.
 
 ```{r}
 # Tokenize
-tidy_text <- recensioni_tv %>%
+tidy_text <- recensioni_tv |> 
   unnest_tokens(word, text)
 ```
 
 ```{r}
 # Join with lexicon
-tidy_sent <- tidy_text %>%
+tidy_sent <- tidy_text |>
   left_join(mal_dict, by = "word")
 
 head(tidy_sent)
@@ -92,8 +92,8 @@ Alternatively, if you prefer custom metrics (e.g., standard deviation or median)
 
 ```{r}
 # Manual summary with dplyr
-tidy_sent %>%
-  group_by(doc_id) %>%
+tidy_sent |>
+  group_by(doc_id) |>
   summarise(
     sentiment = mean(score, na.rm = T),
     n_tokens = n(),
@@ -114,8 +114,8 @@ head(polar_dict)
 
 ```{r}
 # Join with tokenized text
-tidy_text %>%
-  left_join(polar_dict, by = "word") %>%
+tidy_text |>
+  left_join(polar_dict, by = "word") |>
   head()
 ```
 
@@ -123,18 +123,18 @@ It is also possible to generate polarity labels from continuous scores in a cust
 
 
 ```{r}
-mal_dict %>% 
+mal_dict |> 
   mutate(polarity = make_polarity(score, 
-                                  threshold = 0.125)) %>% 
+                                  threshold = 0.125)) |> 
   head()
 ```
 
 Or, to directly convert all numeric scores into polarity labels:
 
 ```{r}
-get_elita() %>% 
+get_elita() |> 
   mutate(across(where(is.numeric), 
-                ~ make_polarity(.x))) %>% 
+                ~ make_polarity(.x))) |> 
   tail()
 ```
 
@@ -143,16 +143,15 @@ It is also possible to set different thresholds for positive and negative classi
 
 ## sentixr with Quanteda
 
-`sentixr` includes helper functions to convert its lexicons into `quanteda::dictionary` objects, facilitating integration with the `quanteda` framework.
+`sentixr` also includes helper functions to convert its lexicons into `quanteda::dictionary` objects, facilitating integration with the `quanteda` framework.
 
 ```{r}
 library(quanteda)
-library(quanteda.sentiment)
 ```
 
 ```{r data}
 data(recensioni_tv)
-sentix_toks <- corpus(recensioni_tv) %>%
+sentix_toks <- corpus(recensioni_tv) |>
   tokens(remove_punct = TRUE)
 ```
 
@@ -160,14 +159,15 @@ sentix_toks <- corpus(recensioni_tv) %>%
 
 ### Creating a Quanteda Dictionary
 
-The `df_to_dict()` function converts a dataframe lexicon into a quanteda dictionary. Where possible, it automatically detects whether to create a valence (continuous scores) or polarity (categorical) dictionary.
+The `df_to_dict()` function converts a dataframe lexicon into a Quanteda dictionary that can be used, for example, with `tokens_lookup()` or `dfm_lookup()`.
+
+If the package `quanteda.sentiment` is installed, the function will automatically assign the appropriate polarity or valence attributes, making the dictionary compatible with `textstat_valence()` or `textstat_polarity()`. 
 
 Other helper functions include `df_to_valence()` and `df_to_polar()` for explicit control.
 
 ```{r}
 # Convert MAL to a valence dictionary
 my_dict <- df_to_dict(mal_dict)
-  
 ```
 
 that is equivalent to:
@@ -176,16 +176,25 @@ that is equivalent to:
 df_to_valence(MAL)
 ```
 
-```{r}
+If the `quanteda.sentiment` package is installed, the valence scores will be automatically assigned to the dictionary's "valence" attribute, and the dictionary will be ready for use with:
+
+```{r, eval = FALSE}
 # Compute valence
-textstat_valence(sentix_toks, dictionary = my_dict)
+quanteda.sentiment::textstat_valence(sentix_toks, dictionary = my_dict)
+#>   doc_id  sentiment
+#> 1   doc1  0.2689482
+#> 2   doc2 -0.1755017
+#> 3   doc3  0.2788701
+#> 4   doc4  0.1295423
+#> 5   doc5 -0.0208181
 ```
 
+Otherwise, the function will create a standard Quanteda dictionary. 
 
 To get a polarity dictionary:
 
 ```{r eval=FALSE}
-my_dict2 <- get_sentix("MAL", polarity = TRUE) %>% 
+my_dict2 <- get_sentix("MAL", polarity = TRUE) |> 
   # if there are other numeric columns, other than 'polarity'
   df_to_polar()
 ```
@@ -198,8 +207,15 @@ my_dict2 <- df_to_dict(polar_dict)
 ```
 
 
-```{r}
-# Compute polarity scores
-textstat_polarity(sentix_toks, dictionary = my_dict2)
-```
 
+```{r, eval = FALSE}
+# Compute polarity scores
+quanteda.sentiment::textstat_polarity(sentix_toks, 
+                                      dictionary = my_dict2)
+#>   doc_id sentiment
+#> 1   doc1 2.8332133
+#> 2   doc2 0.0000000
+#> 3   doc3 1.4663371
+#> 4   doc4 0.9555114
+#> 5   doc5 0.0000000
+```

@@ -15,3 +15,5 @@ sentixr.Rproj
 .positai
 vignettes/*.html
 vignettes/*.pdf
+/doc/
+/Meta/

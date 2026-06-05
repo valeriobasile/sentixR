@@ -24,22 +24,22 @@
 #' @examples
 #' \dontrun{
 #' library(dplyr)
-#' sentix %>% 
+#' sentix |> 
 #'   mutate(polarity = make_polarity(score))
 #'
 #' # with custom threshold
-#' elita_VAD %>%
+#' elita_VAD |>
 #'   mutate(across(where(is.numeric), 
 #'                       ~ make_polarity(.x, 0.125)))
 #'   
 #' # with custom asymmetric thresholds
-#' get_sentix("MAL") %>% 
+#' get_sentix("MAL") |> 
 #'  mutate(polarity = make_polarity(score, 
 #'                                  threshold = c(0.125, -0.135)))
 #'
 #' # with the results of sentix_annotate
-#' sentix_annotate(recensioni_tv, model = "local")  %>% 
-#'  mutate(polarity = make_polarity(score, .125)) 
+#' sentix_annotate(recensioni_tv, model = "local")  |> 
+#'   mutate(polarity = make_polarity(score, .125)) 
 #' }
 #' @export
 make_polarity <- function(score, threshold = 0) {
