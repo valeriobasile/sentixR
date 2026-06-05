@@ -4,6 +4,8 @@
 .Ruserdata
 references.bib
 references2.bib
+cran-comments.md
+CRAN-SUBMISSION
 /.quarto/
 /.vscode/
 **/*.quarto_ipynb

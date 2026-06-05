@@ -14,3 +14,5 @@ references2.bib
 ^README\.qmd$
 ^\.positai$
 ^\.claude$
+^cran-comments\.md$
+^CRAN-SUBMISSION$
