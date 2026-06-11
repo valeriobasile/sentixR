@@ -38,10 +38,8 @@
 #' [`elita_basic`], [get_elita()].
 #'
 #' @examples
-#' \dontrun{
 #' data(elita_VAD)
 #'
 #' # To rescale scores to -1, + 1
 #' get_elita(dict = "elita_VAD")
-#' }
 "elita_VAD"

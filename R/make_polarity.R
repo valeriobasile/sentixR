@@ -22,8 +22,6 @@
 #' @return A character vector with "positive", "negative", or "neutral".
 #' @importFrom dplyr case_when
 #' @examples
-#' \dontrun{
-#' library(dplyr)
 #' sentix |> 
 #'   mutate(polarity = make_polarity(score))
 #'
@@ -36,11 +34,6 @@
 #' get_sentix("MAL") |> 
 #'  mutate(polarity = make_polarity(score, 
 #'                                  threshold = c(0.125, -0.135)))
-#'
-#' # with the results of sentix_annotate
-#' sentix_annotate(recensioni_tv, model = "local")  |> 
-#'   mutate(polarity = make_polarity(score, .125)) 
-#' }
 #' @export
 make_polarity <- function(score, threshold = 0) {
   if (!is.numeric(score)) stop("`score` must be numeric.")

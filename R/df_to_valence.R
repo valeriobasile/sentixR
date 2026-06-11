@@ -32,7 +32,7 @@
 #' @return A `quanteda::dictionary2` object.
 #' @export
 #' @examples
-#' \dontrun{
+#' if(requireNamespace("quanteda")){
 #' # Create a valence dictionary from elita_VAD
 #' data(elita_VAD)
 #' elita_dict <- df_to_valence(elita_VAD)

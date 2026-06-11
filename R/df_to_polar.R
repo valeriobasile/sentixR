@@ -44,7 +44,7 @@
 #' @return A `quanteda::dictionary2` object.
 #' @export
 #' @examples
-#' \dontrun{
+#' if(requireNamespace("quanteda")){
 #' # Create a polarity dictionary from sentix
 #' my_dict <- get_sentix(polarity = TRUE)
 #' my_pol_dict <- df_to_polar(my_dict)

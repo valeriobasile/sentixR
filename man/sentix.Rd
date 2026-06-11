@@ -45,12 +45,11 @@ The values are interpreted as follows:
 The dataset is distributed under the CC BY-SA 4.0 license.
 }
 \examples{
-\dontrun{
 data(sentix)
-get_sentix()}
+get_sentix()
 }
 \references{
-Basile, V., & Nissim, M. (2013). Sentiment analysis on Italian tweets. In \emph{Proceedings of the 4th Workshop on Computational Approaches to Subjectivity, Sentiment and Social Media Analysis}, pages 100–107, Atlanta, Georgia. Association for Computational Linguistics. \url{https://aclanthology.org/W13-1614/}.
+Basile, V., & Nissim, M. (2013). Sentiment Analysis on Italian Tweets. In \emph{Proceedings of the 4th Workshop on Computational Approaches to Subjectivity, Sentiment and Social Media Analysis}, pages 100–107, Atlanta, Georgia. Association for Computational Linguistics. \url{https://aclanthology.org/W13-1614/}.
 
 Basile, V., Nissim, M., Bosco, C., Vassallo, M., & Gabrieli, G. (2025).
 \emph{Sentix} (3.1). Zenodo. \doi{10.5281/zenodo.15609185}.

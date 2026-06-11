@@ -57,7 +57,7 @@
 #' @return A `quanteda::dictionary2` object.
 #' @export
 #' @examples
-#' \dontrun{
+#' if(requireNamespace("quanteda")){
 #' # only numeric fields are present
 #' my_dict <- get_sentix()
 #' df_to_dict(my_dict)

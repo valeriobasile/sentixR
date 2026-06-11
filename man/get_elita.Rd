@@ -35,7 +35,6 @@ For \code{elita_VAD}, which contains scores on a -4 to +4 scale, scores are
 "centered" by default (divided by 4 to map to a -1 to +1 theoretical range).
 }
 \examples{
-\dontrun{
 # Get the default elita_VAD lexicon (centered scores)
 my_dict_VAD <- get_elita("elita_VAD")
 
@@ -44,7 +43,6 @@ my_dict_VAD <- get_elita("elita_VAD", rescale = "none")
 
 # Get elita_basic lexicon
 my_dict_basic <- get_elita("elita_basic")
-}
 }
 \seealso{
 \code{\link{elita_VAD}}, \code{\link{elita_basic}}, \code{\link[=get_sentix]{get_sentix()}}

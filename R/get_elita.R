@@ -31,7 +31,6 @@
 #' @seealso
 #' [`elita_VAD`], [`elita_basic`], [get_sentix()]
 #' @examples
-#' \dontrun{
 #' # Get the default elita_VAD lexicon (centered scores)
 #' my_dict_VAD <- get_elita("elita_VAD")
 #'
@@ -40,7 +39,6 @@
 #'
 #' # Get elita_basic lexicon
 #' my_dict_basic <- get_elita("elita_basic")
-#' }
 get_elita <- function(dict = "elita_VAD", rescale = "default") {
   # Check supported dictionaries
   supported_dicts <- c("elita_VAD", "elita_basic")

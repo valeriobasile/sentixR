@@ -34,7 +34,6 @@
 #' @seealso
 #' [`sentix`], [`MAL`], [get_elita()], [make_polarity()]
 #' @examples
-#' \dontrun{
 #' # Get the default sentix lexicon (key and score)
 #' my_dict <- get_sentix()
 #'
@@ -43,7 +42,6 @@
 #'
 #' # Get MAL and polypathy index
 #' my_dict_poly <- get_sentix("MAL", polypathy = TRUE)
-#' }
 get_sentix <- function(dict = "sentix",
                        polypathy = FALSE,
                        polarity = FALSE,

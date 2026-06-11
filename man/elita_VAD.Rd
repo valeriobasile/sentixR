@@ -31,12 +31,10 @@ See \code{\link{elita_basic}}, for basic discrete emotions (Plutchik's wheel).
 The dataset is distributed under the Creative Commons Universal License (CC0 1.0).
 }
 \examples{
-\dontrun{
 data(elita_VAD)
 
 # To rescale scores to -1, + 1
 get_elita(dict = "elita_VAD")
-}
 }
 \references{
 Di Palma, E. (2024a). ELIta: A New Italian Language Resource for Emotion Analysis.

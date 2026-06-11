@@ -43,7 +43,6 @@ columns, suitable for joining. Polarity classification can be computed via
 Other columns (\code{polypathy_index}) are accessible via arguments.
 }
 \examples{
-\dontrun{
 # Get the default sentix lexicon (key and score)
 my_dict <- get_sentix()
 
@@ -52,7 +51,6 @@ my_dict <- get_sentix(polarity = TRUE)
 
 # Get MAL and polypathy index
 my_dict_poly <- get_sentix("MAL", polypathy = TRUE)
-}
 }
 \seealso{
 \code{\link{sentix}}, \code{\link{MAL}}, \code{\link[=get_elita]{get_elita()}}, \code{\link[=make_polarity]{make_polarity()}}

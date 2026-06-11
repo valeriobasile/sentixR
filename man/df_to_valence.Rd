@@ -36,7 +36,7 @@ only one numeric column, the \code{word_field} is used as the key name
 (see \code{quanteda.sentiment::valence} if installed).
 }
 \examples{
-\dontrun{
+if(requireNamespace("quanteda")){
 # Create a valence dictionary from elita_VAD
 data(elita_VAD)
 elita_dict <- df_to_valence(elita_VAD)

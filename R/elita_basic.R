@@ -47,9 +47,6 @@
 #' [`elita_VAD`], [get_elita()].
 #'
 #' @examples
-#' \dontrun{
 #' data(elita_basic)
-#'
 #' get_elita(dict = "elita_basic")
-#' }
 "elita_basic"

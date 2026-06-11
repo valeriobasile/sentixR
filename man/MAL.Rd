@@ -34,9 +34,8 @@ Affective scores are inherited from the corresponding \code{\link{sentix}} entri
 The dataset is distributed under the CC BY-SA 4.0 license.
 }
 \examples{
-\dontrun{
 data(MAL)
-get_sentix(dict = "MAL")}
+get_sentix(dict = "MAL")
 }
 \references{
 Vassallo, M., Gabrieli, G., Basile, V., & Bosco, C. (2019). The Tenuousness of Lemmatization in Lexicon-based Sentiment Analysis. In \emph{Proceedings of the Sixth Italian Conference on Computational Linguistics (CLiC-it 2019)}, pages 520–525, Bari, Italy. CEUR Workshop Proceedings. \url{https://aclanthology.org/2019.clicit-1.79/}

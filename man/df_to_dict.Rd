@@ -75,7 +75,7 @@ automatically if the categories in the \code{polar_field} are explicit:
 }
 }
 \examples{
-\dontrun{
+if(requireNamespace("quanteda")){
 # only numeric fields are present
 my_dict <- get_sentix()
 df_to_dict(my_dict)

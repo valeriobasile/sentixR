@@ -6,7 +6,7 @@
 \alias{sentixr-package}
 \title{sentixr: Lexicons and Tools for Italian Sentiment Analysis}
 \description{
-Lexicons and tools to perform sentiment analysis on Italian texts. Lexicons included: Sentix 3.0, MAL, ElIta VAD and basic emotions (Plutchik's wheel of emotions).
+Lexicons and tools to perform sentiment analysis on Italian texts. Lexicons included: Sentix 3.0, MAL, ElIta VAD and basic emotions (Plutchik's wheel of emotions). For more details about the lexicons, see Basile & Nissim (2013), "Sentiment Analysis on Italian Tweets", \url{https://aclanthology.org/W13-1614/}; Vassallo et al. (2019), "The Tenuousness of Lemmatization in Lexicon-based Sentiment Analysis", \url{https://aclanthology.org/2019.clicit-1.79/}; Di Palma (2024), "ELIta: A New Italian Language Resource for Emotion Analysis", \url{https://aclanthology.org/2024.clicit-1.36/}.
 }
 \seealso{
 Useful links:

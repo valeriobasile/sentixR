@@ -53,7 +53,7 @@ automatically if the categories in the \code{polar_field} are explicit:
 }
 }
 \examples{
-\dontrun{
+if(requireNamespace("quanteda")){
 # Create a polarity dictionary from sentix
 my_dict <- get_sentix(polarity = TRUE)
 my_pol_dict <- df_to_polar(my_dict)

@@ -35,7 +35,6 @@
 #' Zanchetta, E., & Baroni, M. (2005). Morph-it! A free corpus-based morphological resource for the italian language. In *Proceedings of Corpus linguistics Conference Series 2005*, University of Birmingham.
 #' \url{https://cris.unibo.it/handle/11585/15321}
 #' @examples
-#' \dontrun{
 #' data(MAL)
-#' get_sentix(dict = "MAL")}
+#' get_sentix(dict = "MAL")
 "MAL"

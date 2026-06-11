@@ -1,7 +1,7 @@
 Package: sentixr
 Title: Lexicons and Tools for Italian Sentiment Analysis
 Version: 0.2.0
-Description: Lexicons and tools to perform sentiment analysis on Italian texts. Lexicons included: Sentix 3.0, MAL, ElIta VAD and basic emotions (Plutchik's wheel of emotions).
+Description: Lexicons and tools to perform sentiment analysis on Italian texts. Lexicons included: Sentix 3.0, MAL, ElIta VAD and basic emotions (Plutchik's wheel of emotions). For more details about the lexicons, see Basile & Nissim (2013), "Sentiment Analysis on Italian Tweets", <https://aclanthology.org/W13-1614/>; Vassallo et al. (2019), "The Tenuousness of Lemmatization in Lexicon-based Sentiment Analysis", <https://aclanthology.org/2019.clicit-1.79/>; Di Palma (2024), "ELIta: A New Italian Language Resource for Emotion Analysis", <https://aclanthology.org/2024.clicit-1.36/>.
 Language: en, it
 Depends: 
     R (>= 4.1),

@@ -30,8 +30,6 @@ Classifies numeric sentiment scores into "positive", "negative", or "neutral",
 based on a specified threshold (defaults to 0).
 }
 \examples{
-\dontrun{
-library(dplyr)
 sentix |> 
   mutate(polarity = make_polarity(score))
 
@@ -44,10 +42,5 @@ elita_VAD |>
 get_sentix("MAL") |> 
  mutate(polarity = make_polarity(score, 
                                  threshold = c(0.125, -0.135)))
-
-# with the results of sentix_annotate
-sentix_annotate(recensioni_tv, model = "local")  |> 
-  mutate(polarity = make_polarity(score, .125)) 
-}
 }
 \keyword{functions}
