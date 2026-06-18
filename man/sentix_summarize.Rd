@@ -60,7 +60,8 @@ setting, and if the column \code{polypathy_index} is present in the lexicon.
 }
 \examples{
 \dontrun{
-
+# This example is not executed because it requires the udpipe package and
+# downloading a model
 testo <- "Oggi è una bella giornata. Uscirò a fare una passeggiata"
 # With the output of sentix_annotate
 ann_df <- sentix_annotate(testo, model = "local")
@@ -69,9 +70,9 @@ sentix_summarize(ann_df)
 sentix_summarize(ann_df, simplify = TRUE)
 # With custom grouping (e.g., per sentence)
 sentix_summarize(ann_df, by =c("doc_id", "sentence_id"))
-# With the output of sentix_annotate, ambiguity and other intermediate 
+# With the output of sentix_annotate, ambiguity and other intermediate
 # measures
-ann_df <- sentix_annotate(testo, 
+ann_df <- sentix_annotate(testo,
                           polypathy = TRUE,
                           model = "local")
 sentix_summarize(ann_df)

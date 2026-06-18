@@ -93,6 +93,8 @@ All tokens are thus preserved in the output to maintain context, with
 }
 \examples{
 \dontrun{
+# This example is not executed because it requires the udpipe package and
+# downloading a model
 # Auto-download model
 ann_df <- sentix_annotate("Oggi è una bella giornata")
 
@@ -109,7 +111,6 @@ ann_df <- sentix_annotate("Oggi è una bella giornata",
 data("recensioni_tv")
 model <- udpipe::udpipe_load_model("italian-isdt-ud-2.5-191206.udpipe")
 ann_df <- sentix_annotate(recensioni_tv, model = model)
-)
 }
 }
 \seealso{
