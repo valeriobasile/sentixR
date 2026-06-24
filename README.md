@@ -3,10 +3,11 @@
 
 <!-- badges: start -->
 
+[![](https://www.r-pkg.org/badges/version/sentixr.png)](https://cran.r-project.org/package=sentixr)
+[![](https://img.shields.io/badge/doi-10.32614/CRAN.package.sentixr-blue.svg)](https://doi.org/10.32614/CRAN.package.sentixr)
 [![License:
-GPL-3](https://img.shields.io/badge/License-GPL--3.0-yellow.svg)](https://opensource.org/license/gpl-3-0)
-[![Lifecycle:
-experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://lifecycle.r-lib.org/articles/stages.html#experimental)
+GPL-3.0](https://img.shields.io/badge/license-GPL--3.0-blue.svg)](https://cran.r-project.org/web/licenses/GPL-3.0)
+[![](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://lifecycle.r-lib.org/articles/stages.html#experimental)
 
 <!-- badges: end -->
 
@@ -38,8 +39,17 @@ allowing them to be easily used also within other frameworks such as
 
 ## Install
 
+From CRAN:
+
 ``` r
-remotes::install_github("valeriobasile/sentixr", dependencies = TRUE, 
+install.packages("sentixr")
+```
+
+From GitHub:
+
+``` r
+# install.packages("remotes") 
+remotes::install_github("valeriobasile/sentixr", 
                          build_vignettes = TRUE)
 ```
 

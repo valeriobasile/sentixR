@@ -12,7 +12,17 @@ nocite: |
 
 <!-- badges: start -->
 
-[![License: GPL-3](https://img.shields.io/badge/License-GPL--3.0-yellow.svg)](https://opensource.org/license/gpl-3-0) [![Lifecycle: experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://lifecycle.r-lib.org/articles/stages.html#experimental)
+```{r include=FALSE}
+library(badger)
+```
+
+
+
+`r badge_cran_release("sentixr")` 
+`r badge_doi("10.32614/CRAN.package.sentixr", color = "blue")` 
+`r badge_license("GPL-3.0")`
+`r badge_lifecycle("experimental")`
+
 
 <!-- badges: end -->
 
@@ -32,10 +42,23 @@ It also provides utility functions to manage the included lexicons, allowing the
 
 ## Install
 
+From CRAN:
+
 ``` r
-remotes::install_github("valeriobasile/sentixr", dependencies = TRUE, 
-                         build_vignettes = TRUE)
+install.packages("sentixr")
 ```
+
+From GitHub:
+
+
+``` r
+# install.packages("remotes") 
+remotes::install_github("valeriobasile/sentixr", 
+                         build_vignettes = TRUE)
+
+```
+
+
 
 ## Lexicons
 
