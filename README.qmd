@@ -20,7 +20,7 @@ library(badger)
 
 `r badge_cran_release("sentixr", color = "green")` 
 `r badge_doi("10.32614/CRAN.package.sentixr", color = "blue")` 
-`r badge_license("GPL-3.0")`
+`r badge_license("GPL-3")`
 `r badge_lifecycle("experimental")`
 
 
@@ -173,7 +173,7 @@ sentix_summarize(anno_vad)
 
 If you use *sentixr* in your research, please cite it as follows:
 
-Vardanega, A., Basile, V., Vassallo, M., Gabrieli, G. & Di Palma, E. (2026). sentixr (Versione 0.1.0) https://github.com/valeriobasile/sentixR
+Vardanega, A., Basile, V., Vassallo, M., Gabrieli, G. & Di Palma, E. (2026). sentixr (Versione 0.2.0) https://github.com/valeriobasile/sentixR
 
 ## Authors
 

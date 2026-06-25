@@ -6,7 +6,7 @@
 [![](https://www.r-pkg.org/badges/version/sentixr?color=green.png)](https://cran.r-project.org/package=sentixr)
 [![](https://img.shields.io/badge/doi-10.32614/CRAN.package.sentixr-blue.svg)](https://doi.org/10.32614/CRAN.package.sentixr)
 [![License:
-GPL-3.0](https://img.shields.io/badge/license-GPL--3.0-blue.svg)](https://cran.r-project.org/web/licenses/GPL-3.0)
+GPL-3](https://img.shields.io/badge/license-GPL--3-blue.svg)](https://cran.r-project.org/web/licenses/GPL-3)
 [![](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://lifecycle.r-lib.org/articles/stages.html#experimental)
 
 <!-- badges: end -->
@@ -257,7 +257,7 @@ sentix_summarize(anno_vad)
 If you use *sentixr* in your research, please cite it as follows:
 
 Vardanega, A., Basile, V., Vassallo, M., Gabrieli, G. & Di Palma, E.
-(2026). sentixr (Versione 0.1.0)
+(2026). sentixr (Versione 0.2.0)
 https://github.com/valeriobasile/sentixR
 
 ## Authors
