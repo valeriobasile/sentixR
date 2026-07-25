@@ -22,7 +22,7 @@ library(badger)
 `r badge_doi("10.32614/CRAN.package.sentixr", color = "blue")` 
 `r badge_license("GPL-3")`
 `r badge_lifecycle("experimental")`
-
+[![](https://cranlogs.r-pkg.org/badges/sentixr)](https://cran.r-project.org/package=sentixr)
 
 <!-- badges: end -->
 
